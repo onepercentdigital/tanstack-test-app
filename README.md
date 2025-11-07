@@ -1,310 +1,281 @@
-Welcome to your new TanStack app! 
+# One Percent SEO - TanStack Start Application
 
-# Getting Started
+A modern, full-stack React application built with TanStack Start, showcasing a complete SEO services website with server-side rendering, theme switching, and MDX-based blog.
 
-To run this application:
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
 bun install
-bun --bun run start
+
+# Start development server
+bun run dev
 ```
 
-# Building For Production
+Open http://localhost:3000
 
-To build this application for production:
+## 📋 Features
 
-```bash
-bun --bun run build
-```
+### Implemented Pages
+- ✅ **Home Page** - Hero, Stats, Testimonials, Case Studies, Services Grid, Client Logos
+- ✅ **Search SEO** - Service page template
+- ✅ **About** - Company information and values
+- ✅ **Blog** - MDX-based blog with listing and detail pages
+- ✅ **Free Consultation** - Contact form with server-side email handling
 
-## Testing
+### Design & UX
+- ✅ **Vercel-inspired Theme** - Clean, minimal aesthetic
+- ✅ **Dark/Light Mode** - Persistent theme toggle with SSR support
+- ✅ **Cyan Accent (#00CCCC)** - Brand color for CTAs and highlights
+- ✅ **Inter Variable Font** - Modern typography via Google Fonts
+- ✅ **Fully Responsive** - Mobile-first design
+- ✅ **Accessible** - Shadcn UI + Radix primitives
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+### Technical Features
+- ✅ **Full SSR** - Server-side rendering on all pages
+- ✅ **MDX Blog** - File-based blog system (no database)
+- ✅ **Form Validation** - TanStack Form + Zod schemas
+- ✅ **Email Integration** - Resend API (ready for configuration)
+- ✅ **Error Tracking** - Sentry integration (optional)
+- ✅ **Type Safety** - End-to-end TypeScript
 
-```bash
-bun --bun run test
-```
+## 🛠️ Tech Stack
 
-## Styling
+- **Framework:** TanStack Start v1.134.13
+- **React:** v19.2.0
+- **Styling:** Tailwind CSS v4.1.17
+- **UI Components:** Shadcn UI + Radix UI
+- **Forms:** TanStack Form + Zod
+- **Data Fetching:** TanStack Query
+- **Email:** Resend
+- **Blog:** MDX (file-based)
+- **Deployment:** Cloudflare Workers
+- **Error Tracking:** Sentry (optional)
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## 📦 Environment Setup
 
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
 
-## Linting & Formatting
+2. Add your API keys (optional for development):
+   ```env
+   RESEND_API_KEY=re_xxxxx  # For email functionality
+   VITE_SENTRY_DSN=https://xxxxx  # For error tracking
+   ```
 
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
+### Email Configuration (Optional)
 
+The consultation form uses [Resend](https://resend.com) for email delivery:
 
-```bash
-bun --bun run lint
-bun --bun run format
-bun --bun run check
-```
+1. Sign up at https://resend.com (free tier available)
+2. Get your API key from https://resend.com/api-keys
+3. Add to `.env.local`: `RESEND_API_KEY=re_xxxxx`
+4. Restart dev server
 
+**Note:** The form works without the API key - it just won't send emails.
 
-## Shadcn
+For production, you'll need to:
+- Verify your sending domain in Resend
+- Update the `from` email in `src/server/send-consultation-email.ts`
 
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
+## 🎨 Customization
 
-```bash
-pnpx shadcn@latest add button
-```
+### Theme Colors
 
+Edit `src/styles.css` to customize the color palette:
 
+```css
+:root {
+  --primary: 0 204 204; /* #00CCCC - Cyan accent */
+  --background: 255 255 255; /* White */
+  --foreground: 0 0 0; /* Black */
+}
 
-## Routing
-This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add another a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-
-import { Link } from "@tanstack/react-router";
-
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <header>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
-```
-
-The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-const peopleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/people",
-  loader: async () => {
-    const response = await fetch("https://swapi.dev/api/people");
-    return response.json() as Promise<{
-      results: {
-        name: string;
-      }[];
-    }>;
-  },
-  component: () => {
-    const data = peopleRoute.useLoaderData();
-    return (
-      <ul>
-        {data.results.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    );
-  },
-});
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-### React-Query
-
-React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
-
-First add your dependencies:
-
-```bash
-bun install @tanstack/react-query @tanstack/react-query-devtools
-```
-
-Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
-
-```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// ...
-
-const queryClient = new QueryClient();
-
-// ...
-
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-
-  root.render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
+.dark {
+  --background: 0 0 0; /* Black */
+  --foreground: 255 255 255; /* White */
 }
 ```
 
-You can also add TanStack Query Devtools to the root route (optional).
+### Adding Blog Posts
 
-```tsx
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+Create `.mdx` files in `src/content/blog/`:
 
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools />
-    </>
-  ),
-});
+```mdx
+---
+title: "Your Post Title"
+date: "2024-01-15"
+excerpt: "Brief description"
+author: "Your Name"
+category: "SEO Tips"
+readingTime: "5 min read"
+---
+
+# Your Content Here
+
+Write your post content using Markdown/MDX syntax.
 ```
 
-Now you can use `useQuery` to fetch your data.
+Posts automatically appear in the blog listing.
 
-```tsx
-import { useQuery } from "@tanstack/react-query";
+### Adding Service Pages
 
-import "./App.css";
-
-function App() {
-  const { data } = useQuery({
-    queryKey: ["people"],
-    queryFn: () =>
-      fetch("https://swapi.dev/api/people")
-        .then((res) => res.json())
-        .then((data) => data.results as { name: string }[]),
-    initialData: [],
-  });
-
-  return (
-    <div>
-      <ul>
-        {data.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
-```
-
-You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
-
-## State Management
-
-Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
-
-First you need to add TanStack Store as a dependency:
+Copy `src/routes/search-seo.tsx` as a template:
 
 ```bash
-bun install @tanstack/store
+cp src/routes/search-seo.tsx src/routes/my-service.tsx
 ```
 
-Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
+Then customize the content and add a link in the Header component.
 
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-import "./App.css";
+## 📜 Available Scripts
 
-const countStore = new Store(0);
+```bash
+# Development
+bun run dev              # Start dev server (port 3000)
+bun run build            # Production build
+bun run preview          # Preview production build
 
-function App() {
-  const count = useStore(countStore);
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-    </div>
-  );
-}
+# Testing
+bun run test             # Run Vitest tests
 
-export default App;
+# Code Quality
+bun run check            # Lint and format check
+bun run lint             # Lint code (Biome)
+bun run format           # Format code (Biome)
+
+# Deployment
+bun run deploy           # Deploy to Cloudflare Workers
+bun run cf-typegen       # Generate Cloudflare types
+
+# UI Components
+pnpx shadcn@latest add <component>  # Add Shadcn components
 ```
 
-One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
+## 🚀 Deployment
 
-Let's check this out by doubling the count using derived state.
+### Cloudflare Workers
 
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store, Derived } from "@tanstack/store";
-import "./App.css";
+1. Login to Wrangler:
+   ```bash
+   wrangler login
+   ```
 
-const countStore = new Store(0);
+2. Deploy:
+   ```bash
+   bun run deploy
+   ```
 
-const doubledStore = new Derived({
-  fn: () => countStore.state * 2,
-  deps: [countStore],
-});
-doubledStore.mount();
+3. Your site will be live at `https://tanstack-test-app.your-account.workers.dev`
 
-function App() {
-  const count = useStore(countStore);
-  const doubledCount = useStore(doubledStore);
+### Delete Deployment
 
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-      <div>Doubled - {doubledCount}</div>
-    </div>
-  );
-}
-
-export default App;
+```bash
+wrangler delete tanstack-test-app
 ```
 
-We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
+## 📁 Project Structure
 
-Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
+```
+src/
+├── components/
+│   ├── home/          # Home page sections
+│   ├── layout/        # Header, Footer
+│   ├── ui/            # Shadcn UI components
+│   └── theme-toggle.tsx
+├── content/
+│   └── blog/          # MDX blog posts
+├── data/              # Static data (services, stats, etc.)
+├── lib/
+│   ├── blog.ts        # Blog utilities
+│   ├── theme-provider.tsx
+│   └── utils.ts
+├── routes/            # File-based routing
+│   ├── __root.tsx     # Root layout
+│   ├── index.tsx      # Home page
+│   ├── about.tsx
+│   ├── consultation.tsx
+│   ├── search-seo.tsx
+│   └── blog/
+├── server/
+│   └── send-consultation-email.ts
+└── integrations/
+    └── tanstack-query/
+```
 
-You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
+## 🔗 Documentation
 
-# Demo files
+- **CLAUDE.md** - Comprehensive technical reference and project guide
+- **.env.example** - Environment variable template
 
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
+## 📚 Resources
 
-# Learn More
+- [TanStack Start Docs](https://tanstack.com/start)
+- [TanStack Router Docs](https://tanstack.com/router)
+- [TanStack Query Docs](https://tanstack.com/query)
+- [TanStack Form Docs](https://tanstack.com/form)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Resend Docs](https://resend.com/docs)
 
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+## 🐛 Troubleshooting
+
+### Port 3000 Already in Use
+
+Check what's using the port:
+```bash
+lsof -i :3000
+```
+
+Kill the process:
+```bash
+lsof -ti:3000 | xargs kill -9
+```
+
+Or use a different port:
+```bash
+bun run dev -- --port 3001
+```
+
+### Server Function Errors
+
+Ensure you're using the correct TanStack Start API:
+- ✅ Use `.inputValidator()` (correct)
+- ❌ NOT `.validator()` (doesn't exist)
+- Pass data as `{ data: value }` when calling server functions
+
+Example:
+```typescript
+export const myServerFn = createServerFn({ method: 'POST' })
+  .inputValidator(zodSchema)  // Correct API
+  .handler(async ({ data }) => {
+    // Your code
+  })
+```
+
+### MDX Rendering Issues
+
+Ensure `next-mdx-remote` is properly installed:
+```bash
+bun install next-mdx-remote @mdx-js/react
+```
+
+## 📝 License
+
+This is a baseline/testing project. Customize as needed for production use.
+
+## 🎯 Next Steps for Production
+
+1. Add Resend API key for email functionality
+2. Replace placeholder images with real assets
+3. Add more service pages (Local Maps SEO, etc.)
+4. Implement Privacy Policy, Terms, and legal pages
+5. Configure Sentry for error tracking
+6. Consider adding Strapi/Convex for CMS
+7. Add Clerk for authentication if needed
+
+---
+
+Built with [TanStack Start](https://tanstack.com/start) 🚀
